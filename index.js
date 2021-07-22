@@ -1,10 +1,9 @@
-import ReactNative from "react-native";
-
-const { NativeEventEmitter, NativeModules } = ReactNative;
+import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
 
 const RNZipArchive = NativeModules.RNZipArchive;
 
-const rnzaEmitter = new NativeEventEmitter(RNZipArchive);
+const rnzaEmitter =
+  Platform.OS !== 'web' ? new NativeEventEmitter(RNZipArchive) : null;
 
 const normalizeFilePath = (path) =>
   path.startsWith("file://") ? path.slice(7) : path;
